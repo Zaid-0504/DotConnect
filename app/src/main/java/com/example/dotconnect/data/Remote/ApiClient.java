@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static String BaseUrl="http://192.168.1.102/DotConnect/public/";
+    public static String BaseUrl="http://192.168.80.217/DotConnect/public/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofit() {

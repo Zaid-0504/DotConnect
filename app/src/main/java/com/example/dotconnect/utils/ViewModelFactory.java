@@ -9,6 +9,7 @@ import com.example.dotconnect.data.PostUploadViewModel;
 import com.example.dotconnect.data.Remote.ApiClient;
 import com.example.dotconnect.data.Remote.ApiClientService;
 import com.example.dotconnect.data.Remote.ProfileViewModel;
+import com.example.dotconnect.data.Remote.SearchViewModel;
 import com.example.dotconnect.data.Repository;
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
@@ -31,6 +32,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ProfileViewModel(repository);
         else if (modelClass.isAssignableFrom(PostUploadViewModel.class))
             return (T) new PostUploadViewModel(repository);
+        else if (modelClass.isAssignableFrom(SearchViewModel.class))
+            return (T) new SearchViewModel(repository);
         throw new IllegalArgumentException("View Model not found !");
 
 

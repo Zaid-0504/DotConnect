@@ -1,8 +1,9 @@
 package com.example.dotconnect.Model;
 
-public class UploadPostResponse{
+public class GeneralResponse {
 	private String message;
 	private int status;
+	private String extra;
 
 	public void setMessage(String message){
 		this.message = message;
@@ -18,5 +19,13 @@ public class UploadPostResponse{
 
 	public int getStatus(){
 		return status;
+	}
+
+	public String getExtra() {
+		return extra;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = extra;
 	}
 }

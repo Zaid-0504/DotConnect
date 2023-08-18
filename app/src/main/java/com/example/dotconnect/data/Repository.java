@@ -7,7 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.dotconnect.Model.AuthResponse;
 import com.example.dotconnect.Model.ProfileResponse;
-import com.example.dotconnect.Model.UploadPostResponse;
+import com.example.dotconnect.Model.GeneralResponse;
+import com.example.dotconnect.Model.SearchResponse;
 import com.example.dotconnect.Model.Users;
 import com.example.dotconnect.data.Remote.ApiClientService;
 
@@ -80,28 +81,55 @@ public class Repository {
         return profileResponse;
     }
 
-    public LiveData<UploadPostResponse> upload_post(MultipartBody multipartBody){
+    public LiveData<GeneralResponse> upload_post_profile(MultipartBody multipartBody, Boolean is_profile_update){
 
-        MutableLiveData<UploadPostResponse> uploadResponse= new MutableLiveData<>();
-        Call<UploadPostResponse> call= apiClientService.upload_post(multipartBody);
+        MutableLiveData<GeneralResponse> generalResponseMutableLiveData= new MutableLiveData<>();
+        Call<GeneralResponse> call=null;
+        if (is_profile_update){
+             call= apiClientService.update_profile(multipartBody);}
+        else{
+             call= apiClientService.upload_post(multipartBody);}
         Log.d("Retrofit", "onResponse: " + "Done at "+ System.currentTimeMillis()/1000);
-        call.enqueue(new Callback<UploadPostResponse>() {
+        call.enqueue(new Callback<GeneralResponse>() {
             @Override
-            public void onResponse(Call<UploadPostResponse> call, Response<UploadPostResponse> response) {
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                 if(response.isSuccessful()) {
                     Log.d("Retrofit", "onResponse: " + "Done at "+ System.currentTimeMillis()/1000);
-                    uploadResponse.postValue(response.body());
+                    generalResponseMutableLiveData.postValue(response.body());
                 }else {
                     Log.d("Retrofit", "onResponse: " + response.errorBody()+"  "+ response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<UploadPostResponse> call, Throwable t) {
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
                 Log.d("Retrofit", "onResponse:" + t);
             }
         });
 
-        return uploadResponse;
+        return generalResponseMutableLiveData;
+    }
+
+    public LiveData<SearchResponse> Search_user(String Query){
+        MutableLiveData<SearchResponse> searchResponse = new MutableLiveData<>();
+        Call<SearchResponse> call= apiClientService.Search_info(Query);
+        Log.d("Retrofit", "onResponse: " + "Done at "+ System.currentTimeMillis()/1000);
+        call.enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if(response.isSuccessful()) {
+                    Log.d("Retrofit", "onResponse: " + "Done at "+ System.currentTimeMillis()/1000);
+                    searchResponse.postValue(response.body());
+                }else {
+                    Log.d("Retrofit", "onResponse: " + response.errorBody()+"  "+ response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                Log.d("Retrofit", "onResponse:"+ t);
+            }
+        });
+        return searchResponse;
     }
 }

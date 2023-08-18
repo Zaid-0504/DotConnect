@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,10 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dotconnect.Features.Homepage.MainActivity;
-import com.example.dotconnect.Model.UploadPostResponse;
+import com.example.dotconnect.Model.GeneralResponse;
 import com.example.dotconnect.R;
 import com.example.dotconnect.data.BitmapToFileConverter;
-import com.example.dotconnect.data.LoginViewModel;
 import com.example.dotconnect.data.PostUploadViewModel;
 import com.example.dotconnect.utils.ViewModelFactory;
 import com.google.android.material.textfield.TextInputEditText;
@@ -41,8 +39,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.io.File;
 import java.io.IOException;
 
-import id.zelory.compressor.Compressor;
-import id.zelory.compressor.constraint.Compression;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -110,13 +106,13 @@ public class PostUploadActivity extends AppCompatActivity {
 
                     MultipartBody multipartBody= builder.build();
 
-                    postUploadViewModel.upload_post(multipartBody).observe(PostUploadActivity.this,
-                            new Observer<UploadPostResponse>() {
+                    postUploadViewModel.upload_post(multipartBody,false).observe(PostUploadActivity.this,
+                            new Observer<GeneralResponse>() {
                                 @Override
-                                public void onChanged(UploadPostResponse uploadPostResponse) {
-                                    if (uploadPostResponse!=null){
-                                        if(uploadPostResponse.getStatus()==200) {
-                                            Toast.makeText(PostUploadActivity.this, uploadPostResponse.getMessage()
+                                public void onChanged(GeneralResponse generalResponse) {
+                                    if (generalResponse !=null){
+                                        if(generalResponse.getStatus()==200) {
+                                            Toast.makeText(PostUploadActivity.this, generalResponse.getMessage()
                                                     , Toast.LENGTH_SHORT);
                                             startActivity(new Intent(PostUploadActivity.this, MainActivity.class));
                                             finish();

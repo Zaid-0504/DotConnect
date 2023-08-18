@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.dotconnect.Features.Homepage.Friends.FriendsFragment;
 import com.example.dotconnect.Features.Homepage.PostFeed.PostFragment;
 import com.example.dotconnect.Features.PostUpload.PostUploadActivity;
 import com.example.dotconnect.Features.Profile.ProfileActivity;
+import com.example.dotconnect.Features.Search.SearchActivity;
 import com.example.dotconnect.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     PostFragment postFragment;
     NavigationBarView bottomNavigationView;
     FloatingActionButton create_post_button;
+    ImageView search_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         create_post_button=findViewById(R.id.create_post_button);
         friendsFragment= new FriendsFragment();
         postFragment=new PostFragment();
+        search_button=findViewById(R.id.main_search);
         set_Fragment(postFragment);
         set_BottomNavigation();
 
@@ -43,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, PostUploadActivity.class));
+            }
+        });
+
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
             }
         });
     }
